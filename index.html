@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Otsu</title>
+</head>
+
+<body>
+	<div id="settings">
+		<label for="threshold">Порог</label>
+		<input type="number" id="threshold" value="0" min="0" max="256"/>
+		<input type="range" id="thresholdRange" value="0" max="256" />
+		<input type="file" id="image-input" accept="image/png, image/jpeg" />
+		<button id="button-calculate-threshold" disabled>Рассчитать порог</button>
+		<button id="button-binarize">Бинаризировать</button>
+		<button id="button-show-raw-image">Показать исходное изображение</button>
+	</div>
+	<canvas id="canvas" height="500" width="500"></canvas>
+	<script type="text/javascript" src="./otsu.js"></script>
+</body>
+
+</html>
