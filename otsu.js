@@ -16,16 +16,17 @@ const showRawImageButton = document.getElementById("button-show-raw-image")
 showRawImageButton.onclick = showInputImage
 
 const binarizeButton = document.getElementById("button-binarize")
-binarizeButton.onclick = drawBinarizedPixels
+binarizeButton.onclick = () => {
+  setThreshold()
+  drawBinarizedPixels()
+}
+
 
 const imageInput = document.getElementById("image-input");
 imageInput.onchange = () => {
-  setThresholdButton.disabled = false
+  binarizeButton.disabled = false
   showInputImage()
 }
-
-const setThresholdButton = document.getElementById("button-calculate-threshold")
-setThresholdButton.onclick = setThreshold
 
 function showInputImage() {
   url = getInputImageUrl()
