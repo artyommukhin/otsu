@@ -1,6 +1,7 @@
 const thresholdInput = document.getElementById("threshold")
 thresholdInput.addEventListener("input", (event) => {
   thresholdRange.value = event.target.value;
+  drawBinarizedPixels()
 });
 
 const thresholdRange = document.getElementById("thresholdRange")
@@ -49,6 +50,7 @@ function setThreshold() {
   const histogram = createHistogram(imageData)
   const threshold = otsu(histogram, imageData.data.length / 4)
   thresholdInput.value = threshold
+  thresholdRange.value = threshold
 }
 
 function getImageData() {
