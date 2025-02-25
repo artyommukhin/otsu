@@ -1,0 +1,8 @@
+body {
+    background: #499396;
+    font-family: cursive;
+}
+
+input, button {
+    font: inherit;
+}
