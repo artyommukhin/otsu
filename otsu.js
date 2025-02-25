@@ -1,3 +1,7 @@
+window.onload = () => {
+  localStorage.removeItem(SOURCE_IMAGE_URL)
+}
+
 const thresholdInput = document.getElementById("threshold")
 thresholdInput.addEventListener("input", (event) => {
   thresholdRange.value = event.target.value;
@@ -22,12 +26,14 @@ binarizeButton.onclick = () => {
   drawBinarizedPixels()
 }
 
-
 const imageInput = document.getElementById("image-input");
 imageInput.onchange = () => {
   binarizeButton.disabled = false
+  localStorage.removeItem(SOURCE_IMAGE_URL)
   showInputImage()
 }
+
+const SOURCE_IMAGE_URL = 'sourceImageUrl'
 
 function showInputImage() {
   url = getInputImageUrl()
@@ -36,8 +42,12 @@ function showInputImage() {
 }
 
 function getInputImageUrl() {
+  let url = localStorage.getItem(SOURCE_IMAGE_URL)
+  if (url != null) return url
+
   const imageFile = imageInput.files[0];
-  const url = window.URL.createObjectURL(imageFile);
+  url = window.URL.createObjectURL(imageFile);
+  localStorage.setItem(SOURCE_IMAGE_URL, url)  
   return url
 }
 
@@ -54,7 +64,20 @@ function setThreshold() {
 }
 
 function getImageData() {
-  return context.getImageData(0, 0, canvas.width, canvas.height)
+  image = getSourceImage()  
+  const virtualCanvas = document.createElement('canvas');
+  const virtualContext = virtualCanvas.getContext('2d');
+  virtualCanvas.width = canvas.width
+  virtualCanvas.height = canvas.height
+  virtualContext.drawImage(image, 0, 0, canvas.width, canvas.height);
+  const imageData = virtualContext.getImageData(0, 0, canvas.width, canvas.height);
+  return imageData
+}
+
+function getSourceImage() {
+  url = getInputImageUrl()
+  image = createImage(url)
+  return image
 }
 
 function drawBinarizedPixels() {
