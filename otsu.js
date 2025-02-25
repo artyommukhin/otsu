@@ -38,7 +38,7 @@ const SOURCE_IMAGE_URL = 'sourceImageUrl'
 function showInputImage() {
   url = getInputImageUrl()
   image = createImage(url)
-  image.onload = () => drawImageOnCanvas(image)
+  image.onload = () => drawImage(image)
 }
 
 function getInputImageUrl() {
@@ -51,8 +51,10 @@ function getInputImageUrl() {
   return url
 }
 
-function drawImageOnCanvas(image) {
-  context.drawImage(image, 0, 0, canvas.width, canvas.height);
+function drawImage(image) {
+  canvas.width = image.width
+  canvas.height = image.height
+  context.drawImage(image, 0, 0, canvas.width, canvas.height)
 }
 
 function setThreshold() {
@@ -64,13 +66,13 @@ function setThreshold() {
 }
 
 function getImageData() {
-  image = getSourceImage()  
+  image = getSourceImage()
   const virtualCanvas = document.createElement('canvas');
   const virtualContext = virtualCanvas.getContext('2d');
-  virtualCanvas.width = canvas.width
-  virtualCanvas.height = canvas.height
-  virtualContext.drawImage(image, 0, 0, canvas.width, canvas.height);
-  const imageData = virtualContext.getImageData(0, 0, canvas.width, canvas.height);
+  virtualCanvas.width = image.width
+  virtualCanvas.height = image.height
+  virtualContext.drawImage(image, 0, 0, image.width, image.height);
+  const imageData = virtualContext.getImageData(0, 0, image.width, image.height);
   return imageData
 }
 
